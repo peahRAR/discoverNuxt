@@ -9,7 +9,14 @@ module.exports = {
     "./app.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        out: {
+          'from': { opacity: 1 },
+          'to': { opacity: 0 },
+        }
+      }
+    },
   },
   plugins: [],
 }
