@@ -14,6 +14,10 @@ module.exports = {
         out: {
           'from': { opacity: 1 },
           'to': { opacity: 0 },
+        },
+        scale_out: {
+          'from': { transform: 'scale(1.05)' },
+          'to': {  transform: 'scale(1)' },
         }
       }
     },
