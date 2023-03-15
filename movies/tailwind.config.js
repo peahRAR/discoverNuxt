@@ -18,6 +18,11 @@ module.exports = {
         scale_out: {
           'from': { transform: 'scale(1.05)' },
           'to': {  transform: 'scale(1)' },
+        },
+        circle: {
+          '0%': { opacity: 1},
+          '40%': {opacity: 1},
+          '100%': {opacity: 0}
         }
       }
     },
