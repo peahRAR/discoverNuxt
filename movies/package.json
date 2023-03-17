@@ -16,6 +16,8 @@
   "dependencies": {
     "@nuxt/config": "^2.16.0",
     "@nuxt/types": "^2.16.0",
-    "@nuxt/typescript-build": "^2.1.0"
+    "@nuxt/typescript-build": "^2.1.0",
+    "nuxt-swiper": "^1.0.1",
+    "sass": "^1.59.3"
   }
 }
