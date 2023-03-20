@@ -1,14 +1,16 @@
 <template>
     <section class="text-white my-4">
         <div class="mx-auto">
-            <h2 class="categories font-bold text-xl mx-2 py-2">{{ categoryName }}</h2>
-            <div v-if="loading">Chargement...</div>
+            <h2 class="categories font-bold text-xl mx-4 py-2">{{ categoryName }}</h2>
+            <div v-if="loading">
+                <TheSkeleton :rounded="profilPicture" />
+            </div>
             <div v-else-if="error">{{ error.message }}</div>
             <div v-else>
                 <Swiper :modules="[SwiperEffectCreative, SwiperNavigation]" :slides-per-view="3" :loop="true" :navigation="{
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev'
-                }" :slidesPerGroup="1" :spaceBetween="marginCard" :breakpoints="{
+                }" :slidesPerGroup="1" :breakpoints="{
     '480': {
         slidesPerView: 3,
         slidesPerGroup: 2
@@ -26,22 +28,24 @@
         slidesPerGroup: 5
     }
 }" class="slide-container flex flex-row transition-transform duration-300 overflow-x-visible" id="swipper"
-:class="sliderHeight">
-                    <SwiperSlide class="slide h-max card mx-1 flex flex-col justify-center hover:cursor-pointer" :class="classCard"
-                        v-for="(item, index) in data.results" :key="item.id" :id="index">
+                    >
+                    <SwiperSlide class="slide h-max card mx-1 flex flex-col justify-center hover:cursor-pointer"
+                        :class="classCard" v-for="(item, index) in data.results" :key="item.id" :id="index">
                         <div class="poster" v-if="poster">
                             <img class="w-fit shadow-md object-cover movie-poster"
                                 :src="`https://image.tmdb.org/t/p/w400${item.poster_path}`" :alt="`${item.title}`">
                         </div>
 
-                        <figure class="group profile-picture mx-6 relative rounded-full overflow-hidden " v-if="profilPicture && item.profile_path">
+                        <figure class="group profile-picture mx-6 relative rounded-full overflow-hidden "
+                            v-if="profilPicture && item.profile_path">
                             <div class="img-container relative ">
                                 <img class="w-fit shadow-md object-cover actor-poster aspect-square"
                                     :src="`https://image.tmdb.org/t/p/w400${item.profile_path}`" :alt="`${item.title}`">
                             </div>
-                            <figcaption class="opacity-0 group-hover:opacity-70 transition-opacity flex justify-center absolute left-0 right-0 pb-10 pt-2 bg-black  bottom-0 ">
+                            <figcaption
+                                class="opacity-0 group-hover:opacity-70 transition-opacity flex justify-center absolute left-0 right-0 pb-10 pt-2 bg-black  bottom-0 ">
                                 <p class="text-ellipsis overflow-hidden text-center">
-                                    {{ item.name }}                                 
+                                    {{ item.name }}
                                 </p>
                             </figcaption>
                         </figure>
