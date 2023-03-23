@@ -1,8 +1,17 @@
 <template>
-    <div class="bg-gradient-to-tr from-teal-900 to-black">
-        <TheHeader />
+    <div class="relative">
+        <TheHeader class="fixed top-0 left-0 right-0" />
         <TheContent />
-        <TheFooter />
     </div>
 </template>
 
+<style>
+body {
+    background: black;
+    height: 100%;
+}
+
+.fixed {
+    z-index: 100;
+}
+</style>

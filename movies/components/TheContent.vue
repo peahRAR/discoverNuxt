@@ -1,43 +1,65 @@
 <template>
-    <div class="hero">
-        <TheHero :data="hero" />
+    <div class="relative">
+        <div class="hero">
+            <TheHero v-if="hero.data && hero.data.length === 5" :data="hero.data" />
+        </div>
+
+        <div class="all-section absolute left-0 right-0 top-0 ">
+
+            <div class="absolute top-0 right-0 left-0 z-50">
+                <!--Les tendances - Films -->
+                <TheSlider :data="trendMovie.data" :error="trendMovie.error" :loading="trendMovie.loading" poster
+                    category-name="Les tendances - Films" />
+
+                <div class="bg bg-gradient-to-t from-teal-900 to-black">
+                    <!--Les tendances - Séries -->
+                    <TheSlider :data="trendSerie.data" :error="trendSerie.error" :loading="trendSerie.loading" poster
+                        category-name="Les tendances - Séries" />
+
+                    <!--Les tendances - Séries -->
+                    <TheSlider :data="trendCelebrity.data" :error="trendCelebrity.error" :loading="trendCelebrity.loading"
+                        profil-picture class-card="mx-6 w-max aspect-auto" category-name="Vos célébrités préférées" />
+
+                    <!-- Aventure -->
+                    <TheSlider :data="aventure.data" :error="aventure.error" :loading="aventure.loading" poster
+                        category-name="Aventure" />
+
+                    <!-- Horreur -->
+                    <TheSlider :data="horror.data" :error="horror.error" :loading="horror.loading" poster
+                        category-name="Horreur" />
+
+                    <!-- Horreur -->
+                    <TheSlider :data="anime.data" :error="anime.error" :loading="anime.loading" poster
+                        category-name="Animation" />
+
+                    <!-- Comedie -->
+                    <TheSlider :data="comedie.data" :error="comedie.error" :loading="comedie.loading" poster
+                        category-name="Série comique" />
+
+                    <!-- Pied de page -->
+                    <TheFooter />
+
+                </div>
+
+
+            </div>
+        </div>
+
+
     </div>
-
-
-    <!--Les tendances - Films -->
-    <TheSlider :data="trendMovie.data" :error="trendMovie.error" :loading="trendMovie.loading" poster
-        category-name="Les tendances - Films" />
-
-    <!--Les tendances - Séries -->
-    <TheSlider :data="trendSerie.data" :error="trendSerie.error" :loading="trendSerie.loading" poster
-        category-name="Les tendances - Séries" />
-
-    <!--Les tendances - Séries -->
-    <TheSlider :data="trendCelebrity.data" :error="trendCelebrity.error" :loading="trendCelebrity.loading" profil-picture
-        class-card="mx-6 w-max aspect-auto" category-name="Vos célébrités préférées" />
-
-    <!-- Aventure -->
-    <TheSlider :data="aventure.data" :error="aventure.error" :loading="aventure.loading" poster category-name="Aventure" />
-
-    <!-- Horreur -->
-    <TheSlider :data="horror.data" :error="horror.error" :loading="horror.loading" poster category-name="Horreur" />
-
-    <!-- Horreur -->
-    <TheSlider :data="anime.data" :error="anime.error" :loading="anime.loading" poster category-name="Animation" />
-
-    <!-- Comedie -->
-    <TheSlider :data="comedie.data" :error="comedie.error" :loading="comedie.loading" poster
-        category-name="Série comique" />
 </template>
 
 <script>
-
 
 export default {
     data() {
         return {
             //Hero 
-            hero: [],
+            hero: {
+                data: [],
+                error: null,
+                loading: true
+            },
             //Trending Movies
             trendMovie: {
                 data: null,
@@ -82,17 +104,26 @@ export default {
             },
         }
     },
+    computed: {
+        async randomMovies() {
+            const config = useRuntimeConfig()
+
+            while (this.hero.data.length < 5) {
+                let randPage = Math.round(Math.random() * 499) + 1
+                const { data, error, pending } = await useFetch(`https://api.themoviedb.org/3/discover/movie?api_key=${config.public.apiKey}&language=fr-FR&include_video=true&page=${randPage}`)
+                this.hero.data = this.hero.data.concat(data.value.results.filter(m => m.backdrop_path && m.overview));
+                this.hero.data = this.hero.data.slice(0, 5);
+                this.hero.data = Array.from(new Set(this.hero.data));
+                this.hero.error = error
+                this.hero.loading = pending
+            }
+
+        }
+    },
     async mounted() {
         const config = useRuntimeConfig()
 
-        while (this.hero.length < 5) {
-            let randPage = Math.round(Math.random() * 499) + 1;
-            const {data , error, pending}  = await useFetch(`https://api.themoviedb.org/3/discover/movie?api_key=${config.public.apiKey}&language=fr-FR&include_video=true&page=${randPage}`)
-            console.log(data)
-            console.log(data.results)
-            this.hero.push('test')
-        }
-
+        this.randomMovies
 
         //Trending Movies
         const { data: dataTrendMovie, error: errorTrendMovie, pending: pendingTrendMovie } = await useFetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${config.public.apiKey}&language=fr-FR`)
@@ -138,5 +169,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.all-section {
+    margin-top: 80vh;
+}
+</style>
 
 

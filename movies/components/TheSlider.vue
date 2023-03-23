@@ -1,7 +1,7 @@
 <template>
-    <section class="text-white my-4">
+    <section class="text-white">
         <div class="mx-auto">
-            <h2 class="categories font-bold text-xl mx-4 py-2">{{ categoryName }}</h2>
+            <h2 class="categories text-2xl font-bold mx-4 py-2">{{ categoryName }}</h2>
             <div v-if="loading">
                 <TheSkeleton :rounded="profilPicture" />
             </div>
