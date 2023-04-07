@@ -110,7 +110,7 @@ export default {
 
             while (this.hero.data.length < 5) {
                 let randPage = Math.round(Math.random() * 499) + 1
-                const { data, error, pending } = await useFetch(`https://api.themoviedb.org/3/discover/movie?api_key=${config.public.apiKey}&language=fr-FR&include_video=true&page=${randPage}`)
+                const { data, error, pending } = await useFetch(`https://api.themoviedb.org/3/discover/movie?api_key=${config.public.apiKey}&language=fr-FR&include_video=true&page=${randPage}&include_video=true`)
                 this.hero.data = this.hero.data.concat(data.value.results.filter(m => m.backdrop_path && m.overview));
                 this.hero.data = this.hero.data.slice(0, 5);
                 this.hero.data = Array.from(new Set(this.hero.data));
@@ -162,7 +162,7 @@ export default {
         this.anime.loading = pendingAnime
 
         //Serie Comique
-        const { data: dataComedie, error: errorComedie, pending: pendingComedie } = await useFetch(`https://api.themoviedb.org/3/discover/tv?api_key=${config.public.apiKey}&language=fr-FR&with_genres=35`)
+        const { data: dataComedie, error: errorComedie, pending: pendingComedie } = await useFetch(`https://api.themoviedb.org/3/discover/tv?api_key=${config.public.apiKey}&language=fr-FR&with_genres=35&sort_by=popularity.desc&screened_theatrically=true`)
         this.comedie.data = dataComedie
         this.comedie.error = errorComedie
         this.comedie.loading = pendingComedie

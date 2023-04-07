@@ -1,5 +1,6 @@
 <template>
     <section class="text-white">
+        <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :data="selectedItem"></TheModal>
         <div class="mx-auto">
             <h2 class="categories text-2xl font-bold mx-4 py-2">{{ categoryName }}</h2>
             <div v-if="loading">
@@ -27,11 +28,10 @@
         slidesPerView: 6,
         slidesPerGroup: 5
     }
-}" class="slide-container flex flex-row transition-transform duration-300 overflow-x-visible" id="swipper"
-                    >
+}" class="slide-container flex flex-row transition-transform duration-300 overflow-x-visible" id="swipper">
                     <SwiperSlide class="slide h-max card mx-1 flex flex-col justify-center hover:cursor-pointer"
                         :class="classCard" v-for="(item, index) in data.results" :key="item.id" :id="index">
-                        <div class="poster" v-if="poster">
+                        <div @click="showModal(item)" class="poster" v-if="poster && item.overview">
                             <img class="w-fit shadow-md object-cover movie-poster"
                                 :src="`https://image.tmdb.org/t/p/w400${item.poster_path}`" :alt="`${item.title}`">
                         </div>
@@ -76,7 +76,9 @@ export default {
     },
     data() {
         return {
-            slideActive: false
+            slideActive: false,
+            isModalVisible: false,
+            selectedItem: null
         }
     },
     methods: {
@@ -86,6 +88,13 @@ export default {
                 const slideBtn = this.$refs.prev;
                 slideBtn.style.display = this.slideActive ? 'flex' : 'none';
             }
+        },
+        showModal(item) {
+            this.selectedItem = item
+            this.isModalVisible = true;
+        },
+        closeModal() {
+            this.isModalVisible = false;
         }
     },
 }
