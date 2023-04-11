@@ -9,11 +9,11 @@
                     <div
                         class="border-t-8 border-teal-900 border-blueEnerDF rounded-lg flex flex-col justify-center items-center">
                         <div class="header container p-4 flex justify-between items-center border-b-2 border-teal-900/20">
-                            <p v-if="data.title" class="font-bold text-xl">
-                                {{ data.title }}
+                            <p v-if="movie.title" class="font-bold text-xl">
+                                {{  movie.title }}
                             </p>
-                            <p v-if="data.original_name" class="font-bold text-xl">
-                                {{ data.name }}
+                            <p v-if="movie.original_name" class="font-bold text-xl">
+                                {{ movie.name }}
                             </p>
                             <button type="button" @click="close">
                                 <font-awesome-icon class="text-2xl hover:text-teal-900" :icon="['fas', 'xmark']" />
@@ -22,11 +22,11 @@
                         <div class="body-card p-4 flex">
                             <div class="cover w-1/4">
                                 <img class="w-fit object-cover"
-                                    :src="`https://image.tmdb.org/t/p/original/${data.poster_path}`" :alt="data.title">
+                                    :src="`https://image.tmdb.org/t/p/original/${movie.poster_path}`" :alt="movie.title">
                             </div>
                             <div class="flex w-3/4">
-                                <div v-if="data.overview" class="desc px-2">
-                                    {{ data.overview }}
+                                <div v-if="movie.overview" class="desc px-2">
+                                    {{ movie.overview }}
                                 </div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
 export default {
     name: "modal",
     props: {
-        data: Object,
+        movie: Object,
         error: Object,
         loading: Boolean
     },

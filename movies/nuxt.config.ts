@@ -1,5 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    app: {
+        head: {
+            script: [{
+                src: "https://www.youtube.com/iframe_api",
+                id : "youtube-iframe-js-api-script"
+            }]
+        }
+    },
     runtimeConfig: {
         public: {
             apiKey: process.env.API_KEY,

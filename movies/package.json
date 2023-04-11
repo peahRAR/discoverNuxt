@@ -25,6 +25,7 @@
     "@nuxt/typescript-build": "^2.1.0",
     "fork-awesome": "^1.2.0",
     "nuxt-swiper": "^1.0.1",
-    "sass": "^1.59.3"
+    "sass": "^1.59.3",
+    "vue3-youtube": "^0.1.9"
   }
 }
