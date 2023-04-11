@@ -1,6 +1,9 @@
-### Nuxtjs ###
-# Nuxt build
+node_modules
+*.log*
 .nuxt
-
-# Nuxt generate
+.nitro
+.cache
+.output
+.env
 dist
+.DS_Store
