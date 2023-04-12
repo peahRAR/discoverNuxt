@@ -1,5 +1,9 @@
 name: Deploy to GitHub Pages
 
+env:
+  # Setting an environment variable with the value of a configuration variable
+  env_var: ${{ vars.API_KEY }}
+
 on:
   push:
     branches:
