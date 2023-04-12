@@ -25,4 +25,4 @@ jobs:
           github_token: ${{ secrets.MY_TOKEN }}
           publish_dir: .output/public
           env:
-            API_KEY: ${{ vars.API_KEY }}
+            API_KEY: ${{ env.API_KEY }}
