@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 env:
   # Setting an environment variable with the value of a configuration variable
-  API_KEY: ${{ env.API_KEY }}
+  API_KEY: ${{ vars.API_KEY }}
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
         run: npm run generate
       - name: Deploy
         env:
-          API_KEY: ${{ env.API_KEY }}
+          API_KEY: ${{ vars.API_KEY }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.MY_TOKEN }}
