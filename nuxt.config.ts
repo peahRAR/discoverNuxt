@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     app: {
+        baseURL : 'peahrar.github.io',
         head: {
             script: [{
                 src: "https://www.youtube.com/iframe_api",
