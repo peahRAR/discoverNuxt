@@ -2,7 +2,7 @@
     <div class="w-full m-auto relative mt-16">
         <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem"></TheModal>
 
-        <YouTube v-if="trailer != null && trailer.key" :height="hScreen" :width="wScreen"
+        <YouTube v-if="trailer != null && trailer.key" host="https://www.youtube.com" :height="hScreen" :width="wScreen"
             :src="trailer.key" :vars="varsPlayer" @ready="onReady" ref="youtube"
             class="-mt-44" />
 
