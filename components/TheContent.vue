@@ -110,7 +110,7 @@ export default {
 
             while (this.hero.data.length < 5) {
                 let randPage = Math.round(Math.random() * 499) + 1
-                const { data, error, pending } = await useFetch(`https://api.themoviedb.org/3/discover/movie?api_key=${config.public.apiKey}&language=fr-FR&include_video=true&page=${randPage}&include_video=true`)
+                const { data, error, pending } = await useFetch(`https://api.themoviedb.org/3/discover/movie?api_key=${config.public.apiKey}&language=fr-FR&include_video=true&page=${randPage}&include_video=true&include_adult=false`)
                 this.hero.data = this.hero.data.concat(data.value.results.filter(m => m.backdrop_path && m.overview));
                 this.hero.data = this.hero.data.slice(0, 5);
                 this.hero.data = Array.from(new Set(this.hero.data));
