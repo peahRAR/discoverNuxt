@@ -93,7 +93,7 @@ export default defineComponent({
                 frameborder: 0,
                 playlist: this.trailer.key,
                 enablejsapi: 1,
-                origin: 'http://localhost:3000' 
+                origin: window.location.host 
             }
         },
         hScreen() {
