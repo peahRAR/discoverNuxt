@@ -20,8 +20,6 @@ jobs:
       - name: Generate Build
         run: npm run generate
       - name: Deploy
-        env:
-          API_KEY: ${{ secrets.API_KEY }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.MY_TOKEN }}
