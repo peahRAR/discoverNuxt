@@ -37,7 +37,6 @@ export default {
         handleSlideChange(swiper) {
             const activeIndex = swiper.realIndex;
             this.activeItemId = this.movies[activeIndex].id;
-            console.log("Active item ID: ", this.activeItemId);
         }
     }
 }

@@ -7,7 +7,11 @@
                 @ready="onReady" @state-change="onStateChange" :ref="`youtube${item.id}`" class="-mt-44" />
 
             <div @click="toggleMute(item.id)" class="sound-remote absolute right-24 bottom-80 z-50 text-white text-4xl">
-                <button>{{ isMuted ? 'Unmute' : 'Mute' }}</button>
+                <button>
+                    <i class="border-4 m-auto h-14 w-14 rounded-full py-2 px-1"
+                        :class="[hovered ? (isMuted ? 'fa fa-volume-up' : 'fa fa-volume-mute') : (isMuted ? 'fa fa-volume-mute' : 'fa fa-volume-up')]"
+                        @mouseover="hovered = true" @mouseout="hovered = false"></i>
+                </button>
             </div>
 
         </div>
@@ -71,26 +75,29 @@ export default defineComponent({
             isModalVisible: false,
             selectedItem: false,
             trailer: {},
-            isMuted: true
+            isMuted: true,
+            hovered: false
         }
     },
     methods: {
         onReady() {
+            this.$refs[`youtube${this.item.id}`].mute()
+            this.isMuted = true
             this.$refs[`youtube${this.item.id}`].playVideo()
-            this.$refs[`youtube${this.item.id}`].setVolume(0)
         },
         onStateChange(event) {
-            console.log(event.data)
             if (event.data === 0) {
-                console.log('video fini')
                 this.$refs[`youtube${this.item.id}`].player.playVideo()
             }
         },
         toggleMute(id) {
-            console.log('mute')
             const player = this.$refs[`youtube${id}`].player
             this.isMuted = !this.isMuted
-            player.setVolume(this.isMuted ? 0 : 100)
+            if (this.isMuted) {
+                player.mute(); // Activer le mode muet
+            } else {
+                player.unMute(); // Désactiver le mode muet
+            }
         },
         showModal(item) {
             this.selectedItem = item,
@@ -104,7 +111,6 @@ export default defineComponent({
         varsPlayer() {
             return {
                 autoplay: 1,
-                //mute: 1,
                 controls: 0,
                 rel: 0,
                 loop: 1,
@@ -118,8 +124,6 @@ export default defineComponent({
             }
         },
         isActive() {
-            console.log("Est actif :", this.item.title, " : " ,this.item.id === this.currentItemId)
-            console.log("currentID", this.currentItemId, "id item :", this.item.id)
             return this.item.id === this.currentItemId;
         },
         hScreen() {
@@ -131,4 +135,3 @@ export default defineComponent({
     }
 })
 </script>
-
