@@ -4,10 +4,10 @@
             :slidesPerGroup="1" :pagination="true" :autoplay="{
                 delay: 15000,
                 disableOnInteraction: true
-            }">
+            }" @slideChange="handleSlideChange">
 
             <SwiperSlide class="w-full" v-for="(item, index) in movies" :key="item.id" :id="index">
-                <VideoSlide :item="item" />
+                <VideoSlide :item="item" :currentItemId="activeItemId" />
             </SwiperSlide>
         </Swiper>
     </section>
@@ -21,6 +21,11 @@ export default {
         loading: Boolean,
         error: Object
     },
+    data() {
+        return {
+            activeItemId: this.movies[0].id,
+        }
+    },
     methods: {
         showModal(item) {
             this.selectedItem = item,
@@ -28,6 +33,11 @@ export default {
         },
         closeModal() {
             this.isModalVisible = false;
+        },
+        handleSlideChange(swiper) {
+            const activeIndex = swiper.realIndex;
+            this.activeItemId = this.movies[activeIndex].id;
+            console.log("Active item ID: ", this.activeItemId);
         }
     }
 }

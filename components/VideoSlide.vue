@@ -2,9 +2,15 @@
     <div class="w-full m-auto relative mt-16">
         <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem"></TheModal>
 
-        <YouTube v-if="trailer != null && trailer.key" host="https://www.youtube.com" :height="hScreen" :width="wScreen"
-            :src="trailer.key" :vars="varsPlayer" @ready="onReady" ref="youtube"
-            class="-mt-44" />
+        <div class="player" v-if="isActive && trailer != null && trailer.key">
+            <YouTube host="https://www.youtube.com" :height="hScreen" :width="wScreen" :src="trailer.key" :vars="varsPlayer"
+                @ready="onReady" @state-change="onStateChange" :ref="`youtube${item.id}`" class="-mt-44" />
+
+            <div @click="toggleMute(item.id)" class="sound-remote absolute right-24 bottom-80 z-50 text-white text-4xl">
+                <button>{{ isMuted ? 'Unmute' : 'Mute' }}</button>
+            </div>
+
+        </div>
 
         <img v-else class="w-full object-cover h-screen" :src="`https://image.tmdb.org/t/p/original/${item.backdrop_path}`"
             :alt="item.title">
@@ -13,7 +19,7 @@
         <div class=" absolute bottom-0 top-0 left-0 right-0 z-30 bg-gradient-to-t from-black overlay"></div>
 
         <div class="absolute top-0 right-0 left-0 z-4 mt-56">
-            <div class="mt-6 m-auto container">
+            <div class="mt-12 m-auto container">
                 <div
                     class="desc-box absolute z-50 flex flex-col justify-start bg-teal-900/30 rounded-lg p-4 drop-shadow-xl w-2/6">
                     <div class="title text-4xl text-white font-bold mb-4">
@@ -48,7 +54,8 @@ import YouTube from 'vue3-youtube'
 export default defineComponent({
     components: { YouTube },
     props: {
-        item: Object
+        item: Object,
+        currentItemId: Number,
     },
     async mounted() {
         const config = useRuntimeConfig()
@@ -64,11 +71,26 @@ export default defineComponent({
             isModalVisible: false,
             selectedItem: false,
             trailer: {},
+            isMuted: true
         }
     },
     methods: {
         onReady() {
-            this.$refs.youtube.playVideo()
+            this.$refs[`youtube${this.item.id}`].playVideo()
+            this.$refs[`youtube${this.item.id}`].setVolume(0)
+        },
+        onStateChange(event) {
+            console.log(event.data)
+            if (event.data === 0) {
+                console.log('video fini')
+                this.$refs[`youtube${this.item.id}`].player.playVideo()
+            }
+        },
+        toggleMute(id) {
+            console.log('mute')
+            const player = this.$refs[`youtube${id}`].player
+            this.isMuted = !this.isMuted
+            player.setVolume(this.isMuted ? 0 : 100)
         },
         showModal(item) {
             this.selectedItem = item,
@@ -82,7 +104,7 @@ export default defineComponent({
         varsPlayer() {
             return {
                 autoplay: 1,
-                mute: 1,
+                //mute: 1,
                 controls: 0,
                 rel: 0,
                 loop: 1,
@@ -91,10 +113,14 @@ export default defineComponent({
                 fullscreen: 1,
                 playinline: 0,
                 frameborder: 0,
-                playlist: this.trailer.key,
                 enablejsapi: 1,
-                origin: window.location.host 
+                origin: ' https://' + window.location.host
             }
+        },
+        isActive() {
+            console.log("Est actif :", this.item.title, " : " ,this.item.id === this.currentItemId)
+            console.log("currentID", this.currentItemId, "id item :", this.item.id)
+            return this.item.id === this.currentItemId;
         },
         hScreen() {
             return window.innerHeight
@@ -106,4 +132,3 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
