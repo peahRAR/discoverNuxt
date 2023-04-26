@@ -1,6 +1,6 @@
 <template>
     <section class="text-white">
-        <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem"></TheModal>
+        <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem" :key="selectedItem"></TheModal>
         <div class="mx-auto">
             <h2 class="categories text-2xl font-bold mx-4 py-2">{{ categoryName }}</h2>
             <div v-if="loading">
@@ -30,7 +30,7 @@
     }
 }" class="slide-container flex flex-row transition-transform duration-300 overflow-x-visible" id="swipper">
                     <SwiperSlide class="slide h-max card mx-1 flex flex-col justify-center hover:cursor-pointer"
-                        :class="classCard" v-for="(item, index) in movies.results" :key="item.id" :id="index">
+                        :class="classCard" v-for="(item, index) in movies" :key="item.id" :id="index">
                         <div @click="showModal(item)" class="poster" v-if="poster && item.overview">
                             <img class="w-fit shadow-md object-cover movie-poster"
                                 :src="`https://image.tmdb.org/t/p/w400${item.poster_path}`" :alt="`${item.title}`">
@@ -63,7 +63,6 @@
 </template>
 
 <script>
-
 export default {
     props: {
         categoryName: String,
@@ -98,7 +97,6 @@ export default {
         }
     },
 }
-
 </script>
 
 
@@ -108,9 +106,6 @@ export default {
 .categories {
     padding-left: 4%;
 }
-
-
-
 .swiper-button-next,
 .swiper-button-prev {
     color: white;
@@ -124,44 +119,33 @@ export default {
     margin: auto;
     transform: scale(0.97);
 }
-
 .swipper-slide {
     display: flex;
 }
-
 .swiper-button-prev {
     left: 0;
     display: none;
 }
-
 .swiper-button-next {
     right: 0;
 }
-
-
-
 .card {
     transform: scale(0.97);
     transition: transform 0.2s ease-in-out;
 }
-
 .card:hover {
     transform: scale(1);
     transition: transform 0.2s ease-in-out;
 }
-
 .poster {
     aspect-ratio: 2/3;
 }
-
 .slide {
     display: flex;
-
     &:empty {
         display: none;
     }
 }
-
 .slide img {
     width: 100%;
     height: 100%;

@@ -8,32 +8,32 @@
 
             <div class="absolute top-0 right-0 left-0 z-50">
                 <!--Les tendances - Films -->
-                <TheSlider :movies="trendMovie.data" :error="trendMovie.error" :loading="trendMovie.loading" poster
+                <TheSlider v-if="trendMovie.data?.results" :movies="trendMovie.data.results" :error="trendMovie.error" :loading="trendMovie.loading" poster
                     category-name="Les tendances - Films" />
 
-                <div class="bg bg-gradient-to-t from-teal-900 to-black">
+                <div class="bg bg-gradient-to-b from-black to-teal-900">
                     <!--Les tendances - Séries -->
-                    <TheSlider :movies="trendSerie.data" :error="trendSerie.error" :loading="trendSerie.loading" poster
+                    <TheSlider v-if="trendSerie.data?.results" :movies="trendSerie.data.results" :error="trendSerie.error" :loading="trendSerie.loading" poster
                         category-name="Les tendances - Séries" />
 
-                    <!--Les tendances - Séries -->
-                    <TheSlider :movies="trendCelebrity.data" :error="trendCelebrity.error" :loading="trendCelebrity.loading"
+                    <!--Les célébritées -->
+                    <TheSlider v-if="trendCelebrity.data?.results" :movies="trendCelebrity.data.results" :error="trendCelebrity.error" :loading="trendCelebrity.loading"
                         profil-picture class-card="mx-6 w-max aspect-auto" category-name="Vos célébrités préférées" />
 
                     <!-- Aventure -->
-                    <TheSlider :movies="aventure.data" :error="aventure.error" :loading="aventure.loading" poster
+                    <TheSlider v-if="aventure.data?.results" :movies="aventure.data.results" :error="aventure.error" :loading="aventure.loading" poster
                         category-name="Aventure" />
 
                     <!-- Horreur -->
-                    <TheSlider :movies="horror.data" :error="horror.error" :loading="horror.loading" poster
+                    <TheSlider v-if="horror.data?.results" :movies="horror.data.results" :error="horror.error" :loading="horror.loading" poster
                         category-name="Horreur" />
 
                     <!-- Horreur -->
-                    <TheSlider :movies="anime.data" :error="anime.error" :loading="anime.loading" poster
+                    <TheSlider v-if="anime.data?.results" :movies="anime.data.results" :error="anime.error" :loading="anime.loading" poster
                         category-name="Animation" />
 
                     <!-- Comedie -->
-                    <TheSlider :movies="comedie.data" :error="comedie.error" :loading="comedie.loading" poster
+                    <TheSlider v-if="comedie.data?.results" :movies="comedie.data.results" :error="comedie.error" :loading="comedie.loading" poster
                         category-name="Série comique" />
 
                     <!-- Pied de page -->

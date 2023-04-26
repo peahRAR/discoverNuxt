@@ -1,6 +1,5 @@
 <template>
     <div class="w-full m-auto relative mt-16">
-        <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem"></TheModal>
 
         <div class="player" v-if="isActive && trailer != null && trailer.key">
             <YouTube host="https://www.youtube.com" :height="hScreen" :width="wScreen" :src="trailer.key" :vars="varsPlayer"
@@ -38,7 +37,7 @@
                     <div>
                         <button
                             class="button flex align-middle items-center justify-center w-full px-6 mt-2 text-center rounded-xl border-2 border-white py-3 text-base mb-3 font-medium text-white transition duration-200 hover:bg-teal-900/50 active:bg-red-700/5"
-                            @click="showModal(item)">
+                            @click="$emit('show-modal', item)">
                             <p class="flex items-center content-center">
                                 <font-awesome-icon class="px-2 text-xl text-white" :icon="['fas', 'circle-info']" />
                                 Plus d'infos
@@ -72,8 +71,6 @@ export default defineComponent({
     },
     data() {
         return {
-            isModalVisible: false,
-            selectedItem: false,
             trailer: {},
             isMuted: true,
             hovered: false
@@ -98,13 +95,6 @@ export default defineComponent({
             } else {
                 player.unMute(); // Désactiver le mode muet
             }
-        },
-        showModal(item) {
-            this.selectedItem = item,
-                this.isModalVisible = true;
-        },
-        closeModal() {
-            this.isModalVisible = false;
         },
     },
     computed: {
