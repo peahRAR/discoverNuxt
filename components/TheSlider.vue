@@ -1,6 +1,6 @@
 <template>
     <section class="text-white">
-        <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem" :key="selectedItem"></TheModal>
+        <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem" :key="selectedItem" :type_of_content="type_of_content" ></TheModal>
         <div class="mx-auto">
             <h2 class="categories text-2xl font-bold mx-4 py-2">{{ categoryName }}</h2>
             <div v-if="loading">
@@ -72,6 +72,7 @@ export default {
         poster: Boolean,
         profilPicture: Boolean,
         classCard: String,
+        type_of_content: String
     },
     data() {
         return {

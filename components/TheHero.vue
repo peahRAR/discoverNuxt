@@ -1,6 +1,6 @@
 <template>
     <section class="relative">
-        <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem" :key="selectedItem">
+        <TheModal v-if="selectedItem" v-show="isModalVisible" @close="closeModal" :movie="selectedItem" :key="selectedItem" :type_of_content="type_of_content">
         </TheModal>
         <Swiper :slides-per-view="1"
             :loop="true" :slidesPerGroup="1" :pagination="true" :autoplay="{
@@ -25,7 +25,8 @@ export default {
     props: {
         movies: Array,
         loading: Boolean,
-        error: Object
+        error: Object,
+        type_of_content: String
     },
     data() {
         return {
